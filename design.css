@@ -1,0 +1,121 @@
+/* Merkl Bautenschutz: zentrale Design-Variablen. Beschreibung in DESIGN.md. */
+:root {
+  --rot: #993300;
+  --rot-dunkel: #7a2800;
+  --grau: #4a4033;
+  --grau-mittel: #746a5e;
+  --creme: #fff7ef;
+  --sand: #f3ece3;
+  --linie: #e5ddd2;
+  --weiss: #ffffff;
+
+  --schrift: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --schrift-serif: Georgia, "Times New Roman", serif;
+  --grund: 20px;
+  --zeile: 1.6;
+  --h1: clamp(36px, 5vw, 52px);
+  --h2: clamp(30px, 3.6vw, 36px);
+  --h3: 24px;
+  --klein: 17px;
+
+  --breite: 1120px;
+  --text-breite: 68ch;
+  --rand: 20px;
+  --abschnitt: 72px;
+  --radius: 10px;
+  --knopf-hoehe: 56px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--weiss);
+  color: var(--grau);
+  font: 400 var(--grund)/var(--zeile) var(--schrift);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: var(--rot); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a:hover { color: var(--rot-dunkel); }
+h1, h2, h3 { font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: var(--h1); }
+h2 { font-size: var(--h2); margin-bottom: 20px; }
+h3 { font-size: var(--h3); margin-bottom: 10px; }
+p { max-width: var(--text-breite); }
+p + p { margin-top: 16px; }
+ul, ol { padding-left: 1.3em; max-width: var(--text-breite); }
+li + li { margin-top: 8px; }
+.klein { font-size: var(--klein); color: var(--grau-mittel); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Layout */
+.wrap { width: min(var(--breite), 100% - 2 * var(--rand)); margin-inline: auto; }
+section { padding-block: var(--abschnitt); }
+section.creme { background: var(--creme); }
+section.sand { background: var(--sand); }
+.kopf-ueber { color: var(--rot); font-size: var(--klein); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+
+/* Knöpfe */
+.knopf {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: var(--knopf-hoehe); padding: 0 28px;
+  border-radius: var(--radius); font-size: var(--grund); font-weight: 600;
+  text-decoration: none; border: 2px solid transparent; cursor: pointer;
+  font-family: inherit;
+}
+.knopf.rot { background: var(--rot); color: var(--weiss); border-color: var(--rot); }
+.knopf.rot:hover { background: var(--rot-dunkel); border-color: var(--rot-dunkel); color: var(--weiss); }
+.knopf.hell { background: var(--weiss); color: var(--grau); border-color: var(--linie); }
+.knopf.hell:hover { border-color: var(--grau); color: var(--grau); }
+.knopf svg { width: 22px; height: 22px; flex: none; }
+.knoepfe { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+
+/* Haken-Liste */
+.haken { list-style: none; padding: 0; }
+.haken li { position: relative; padding-left: 36px; }
+.haken li::before {
+  content: ""; position: absolute; left: 0; top: 0.35em; width: 22px; height: 22px;
+  border-radius: 50%; background: var(--rot);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='black'/%3E%3Cpath d='M7 12.5l3 3 7-7' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='black'/%3E%3Cpath d='M7 12.5l3 3 7-7' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* Vorher / Nachher */
+.vn { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.vn figure { position: relative; }
+.vn img { border-radius: var(--radius); aspect-ratio: 4/3; object-fit: cover; width: 100%; }
+.vn figcaption {
+  position: absolute; left: 12px; top: 12px; padding: 6px 14px; border-radius: 6px;
+  background: rgba(255,255,255,.92); color: var(--grau); font-weight: 600; font-size: var(--klein);
+}
+.vn figure.nachher figcaption { background: var(--rot); color: var(--weiss); }
+.vn-text { margin-top: 12px; }
+.vn-liste { display: grid; gap: 48px; }
+
+/* Formular */
+form label { display: block; font-weight: 600; margin-bottom: 6px; }
+form input, form textarea, form select {
+  width: 100%; font: inherit; color: var(--grau); padding: 14px 16px;
+  border: 2px solid var(--linie); border-radius: var(--radius); background: var(--weiss);
+  min-height: var(--knopf-hoehe);
+}
+form input:focus, form textarea:focus { outline: 3px solid var(--rot); outline-offset: 2px; border-color: var(--rot); }
+form textarea { min-height: 160px; resize: vertical; }
+.feld { margin-bottom: 20px; }
+.felder-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+
+/* Fester Anruf-Knopf fürs Handy */
+.anruf-leiste { display: none; }
+
+@media (max-width: 760px) {
+  :root { --grund: 18px; --abschnitt: 48px; }
+  .vn { grid-template-columns: 1fr; }
+  .felder-2 { grid-template-columns: 1fr; }
+  .anruf-leiste {
+    display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+    padding: 10px var(--rand) calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,.96); border-top: 1px solid var(--linie);
+  }
+  .anruf-leiste .knopf { width: 100%; white-space: nowrap; font-size: 19px; }
+  body { padding-bottom: 86px; }
+}
